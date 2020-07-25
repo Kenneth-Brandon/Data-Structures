@@ -1,115 +1,79 @@
-
-print("========================NODE==================")
-
-# constructor
-# get_value, returns value
-# get_next, returns self.next value
-# set_next, sets self.next to a new_next
-
-
 class Node:
-
-    def __init__(self, value):
+    def __init__(self, value, next=None):
         self.value = value
-        self.next = None
+        self.next = next
 
     def get_value(self):
+        # Returns the node's data
         return self.value
 
     def get_next(self):
+        # Returns the next node
         return self.next
 
     def set_next(self, new_next):
+        # Sets the node's next node
         self.next = new_next
 
 
-# constructor
-
-# add_to_tail
-# remove_tail
-# remove_head
-# contains
-# get_max
-
 class LinkedList:
-
     def __init__(self):
+        # The first node
         self.head = None
+        # The last node
         self.tail = None
 
     def add_to_tail(self, value):
+        # Adds data to the end of LinkedList
         new_node = Node(value)
-        if self.head is None and self.tail is None:
+        # Handle empty list
+        if not self.head and not self.tail:
             self.head = new_node
             self.tail = new_node
+        # Non-empty list
         else:
+            # Set the next node on the new node
             self.tail.set_next(new_node)
+            # Set the tail to the new node
             self.tail = new_node
 
-    def remove_tail(self):
-        if not self.head:
+    def remove_head(self):
+        # Removes the head node and returns the data
+        # Save the head node data
+        if self.head is None:
             return None
-
+        value = self.head.get_value()
+        # Handle the single node
         if self.head is self.tail:
-            value = self.head.get_value()
             self.head = None
             self.tail = None
-            return value
+        else:
+            # Set the head to the next node
+            self.head = self.head.get_next()
 
-        current = self.head
-
-        while current.get_next() is not self.tail:
-            current = current.get_next()
-
-        value = self.tail.get_value()
-        self.tail = current
         return value
 
-    def remove_head(self):
-        if self.head is None and self.tail is None:
-            return
-        # what if we only have a single elem in the linked list?
-        # both head and tail are pointing at the same Node
-        if not self.head.get_next():
-            value = self.head.get_value()
-            # delete the linked list's head reference
-            self.head = None
-            # also delete the linked list's tail reference
-            self.tail = None
-            return value
-        val = self.head.get_value()
-        # set self.head to the Node after the head
-        self.head = self.head.get_next()
-        return val
+    def contains(self, value):
+        if self.head is None:
+            return False
 
-    # def contains(self, value):
-    #     if not self.head:
-    #         return False
-    #     # get a reference to the node we're currently at; update this as we traverse the list
-    #     current = self.head
-    #     # check to see if we're at a valid node
-    #     while current:
-    #         # return True if the current value we're looking at matches our target value
-    #         if current.get_value() == value:
-    #             return True
-    #         # update our current node to the current node's next node
-    #         current = current.get_next()
-    #     # if we've gotten here, then the target node isn't in our list
-    #     return False
+        current_node = self.head
 
-    # def get_max(self):
-    #     if not self.head:
-    #         return None
-    #     # reference to the largest value we've seen so far
-    #     max_value = self.head.get_value()
-    #     # reference to our current node as we traverse the list
-    #     current = self.head.get_next()
-    #     # check to see if we're still at a valid list node
-    #     while current:
-    #         # check to see if the current value is greater than the max_value
-    #         if current.get_value() > max_value:
-    #             # if so, update our max_value variable
-    #             max_value = current.get_value()
-    #         # update the current node to the next node in the list
-    #         current = current.get_next()
-    #     return max_value
+        while current_node is not None:
+            if current_node.value == value:
+                return True
+
+            current_node = current_node.next
+        return False
+
+    def get_max(self):
+        if self.head is None:
+            return None
+
+        current_node = self.head
+        max = 0
+        while current_node is not None:
+            if current_node.value > max:
+                max = current_node.value
+            current_node = current_node.next
+        return max
