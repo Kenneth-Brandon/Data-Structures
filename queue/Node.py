@@ -1,11 +1,11 @@
 class Node:
     """
     Data: value and next node
-    Methods:
-        1. Get Value
-        2. Set Value
-        3. Get Next
-        4. Set Next
+    Methods: 
+        1. get value
+        2. set value
+        3. get next
+        4. set next
     """
 
     def __init__(self, value=None, next_node=None):
@@ -28,12 +28,12 @@ class Node:
 class LinkedList:
     """
     Data:
-        1. Ref to head node
-        2. Ref to tail node
+        1. ref to head Node
+        2. ref to tail Node
 
     Behavior/Methods:
-        1. Append
-        2. Prepend
+        1. Append ( Add a new node to the Node ref'd by the tail)
+        2. Prepend ( Add a new node and poiny yjay Node's next_node at the old Head; update Head pointer)
         3. Remove Head
         4. Remove Tail
         5. Contains?
